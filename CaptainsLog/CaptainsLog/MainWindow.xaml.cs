@@ -14,6 +14,10 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CaptainsLog.Core;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace CaptainsLog
 {
@@ -22,12 +26,18 @@ namespace CaptainsLog
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<LogEntry>logEntries;
+        public ObservableCollection<LogEntry> logEntries;
+        string filename = "C:\\dev\\origin\\06-CaptainsLog\\CaptainsLog\\data\\Logs.txt";
 
         public MainWindow()
         {
+            //Read Logs File
+
+            //Deserialize JSON
+           // imported = DeSerJSON();
+            //Load JSON to logEntries
             InitializeComponent();
-            logEntries = new ObservableCollection<LogEntry>();
+            logEntries = new ObservableCollection<LogEntry>(DeSerJSON());
             gridLogEntries.ItemsSource = logEntries;
         }
 
@@ -54,6 +64,62 @@ namespace CaptainsLog
         public int entryCount()
         {
             return logEntries.Count();
+        }
+
+        public void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //Call Serialize JSON
+                     // string jsonString = SerializeJSon<ObservableCollection<LogEntry>>(logEntries);
+            writeFile(SerJSON());
+            MessageBox.Show(SerJSON());
+        }
+        /*
+        public static string SerializeJSon<T>(T t)
+        {
+            MemoryStream stream = new MemoryStream();
+            DataContractJsonSerializer ds = new DataContractJsonSerializer(typeof(T));
+            DataContractJsonSerializerSettings s = new DataContractJsonSerializerSettings();
+            ds.WriteObject(stream, t);
+            string jsonString = Encoding.UTF8.GetString(stream.ToArray());
+            stream.Close();
+            return jsonString;
+        }*/
+
+        public string SerJSON()
+        {
+            string serialized = JsonConvert.SerializeObject(logEntries);
+            return serialized;
+        }
+
+         public ObservableCollection<LogEntry> DeSerJSON()
+        //public void DeSerJSON()
+        {
+            string text = readFile(filename);
+ObservableCollection<LogEntry>  imported = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(text);
+          return imported;
+        }
+
+
+        public void writeFile(string logs)
+        {
+            StreamWriter objWriter;
+            objWriter = new System.IO.StreamWriter(filename);
+            objWriter.Write(logs);
+            objWriter.Close();
+        }
+
+        public string readFile(string fn)
+        {
+            string jsontext = "";
+            System.IO.StreamReader objReader;
+            objReader = new System.IO.StreamReader(fn);
+            do
+            {
+                jsontext += objReader.ReadLine() + "\r\n";
+            }
+            while (objReader.Peek() != -1);
+            objReader.Close();
+            return jsontext;
         }
     }
 }
