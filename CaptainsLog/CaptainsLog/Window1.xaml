@@ -1,0 +1,18 @@
+﻿<Window x:Class="CaptainsLog.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CaptainsLog"
+        mc:Ignorable="d"
+        Title="Window1" Height="300" Width="300">
+    <Grid>
+        <TextBox x:Name="textBoxEntry" HorizontalAlignment="Left" Height="152" Margin="10,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <Button x:Name="buttonEntrySubmit" Content="Submit" HorizontalAlignment="Left" Height="24" Margin="10,239,0,0" VerticalAlignment="Top" Width="75" Click="buttonEntrySubmit_Click"/>
+        <Button x:Name="buttonEntryCancel" Content="Cancel" HorizontalAlignment="Left" Margin="207,239,0,0" VerticalAlignment="Top" Width="75" Click="buttonEntryCancel_Click"/>
+        <TextBox x:Name="textBoxTitle" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <Label x:Name="labelEntryTitle" Content="Title:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="100"/>
+        <Label x:Name="labelEntryText" Content="Entry Text:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" Width="100"/>
+
+    </Grid>
+</Window>
