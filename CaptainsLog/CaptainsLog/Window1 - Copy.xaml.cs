@@ -22,23 +22,20 @@ namespace CaptainsLog
     public partial class Window2 : Window
     {
 
-        ObservableCollection<LogEntry> logEntries = new ObservableCollection<LogEntry>();
-        static string temp;
+        LogEntry tempObj { get; set; }
 
         public Window2()
         {
             InitializeComponent();
-            var mainWindow = Owner as MainWindow;
-            textBoxEntry.Text = 
-            textBoxTitle.Text = temp;// mainWindow.getTempTitle();
-            textBoxEntry.Text = "hi";//mainWindow.getTempText();
         }
 
-        public static void setTemp(string value)
+        public Window2(LogEntry name) : this()
         {
-            temp = value;
+            this.tempObj = name;
+            textBoxEntry.Text = tempObj.Text;
+            textBoxTitle.Text = tempObj.Title;
         }
-
+      
         private void buttonEntrySubmit_Click(object sender, RoutedEventArgs e)
         {
 
