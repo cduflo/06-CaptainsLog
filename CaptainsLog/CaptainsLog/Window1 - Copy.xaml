@@ -8,7 +8,7 @@
         Title="Window1" Height="316.265" Width="312.651">
     <Grid>
         <TextBox x:Name="textBoxEntry" HorizontalAlignment="Left" Height="152" Margin="10,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
-        <Button x:Name="buttonEntrySubmit" Content="Submit" HorizontalAlignment="Left" Height="24" Margin="207,239,0,0" VerticalAlignment="Top" Width="75" Click="buttonEntrySubmit_Click"/>
+        <Button x:Name="buttonEntrySubmit" Content="Save" HorizontalAlignment="Left" Height="24" Margin="207,239,0,0" VerticalAlignment="Top" Width="75" Click="buttonEntrySubmit_Click"/>
         <Button x:Name="buttonEntryCancel" Content="Cancel" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="75" Click="buttonEntryCancel_Click" Height="24"/>
         <TextBox x:Name="textBoxTitle" HorizontalAlignment="Left" Height="23" Margin="10,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <Label x:Name="labelEntryTitle" Content="Title:" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" Width="100"/>

@@ -42,9 +42,10 @@ namespace CaptainsLog
                 log.Title = textBoxTitle.Text;
                 log.Text = textBoxEntry.Text;
                 log.EntryDate = DateTime.Now;
+                log.UpdateDate = DateTime.Now;
 
                 mainWindow.AddLog(log);
-                
+
                 this.Close();
             }
             else

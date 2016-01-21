@@ -17,12 +17,16 @@ using System.Collections.ObjectModel;
 namespace CaptainsLog
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for Window2.xaml
     /// </summary>
     public partial class Window2 : Window
     {
 
         LogEntry tempObj { get; set; }
+        int tempID;
+        string origText;
+        string origTitle;
+
 
         public Window2()
         {
@@ -34,34 +38,38 @@ namespace CaptainsLog
             this.tempObj = name;
             textBoxEntry.Text = tempObj.Text;
             textBoxTitle.Text = tempObj.Title;
+            tempID = tempObj.Id;
+
+            origText = tempObj.Text;
+            origTitle = tempObj.Title;
         }
-      
+
         private void buttonEntrySubmit_Click(object sender, RoutedEventArgs e)
         {
 
             var mainWindow = Owner as MainWindow;
 
-            if (textBoxEntry.Text.Length > 0 && textBoxTitle.Text.Length > 0)
+            if (textBoxEntry.Text != origText || textBoxTitle.Text != origTitle)
             {
                 CaptainsLog.Core.LogEntry log = new LogEntry();
-                log.Id = mainWindow.logEntries.Count() + 1;
+                log.Id = tempID;
                 log.Title = textBoxTitle.Text;
                 log.Text = textBoxEntry.Text;
-                log.EntryDate = DateTime.Now;
+                log.UpdateDate = DateTime.Now;
 
-                mainWindow.AddLog(log);
-                
+                mainWindow.UpdateLog(log);
+                mainWindow.RefreshGrid();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Please ensure both fields are populated and try again.");
+                this.Close();
             }
         }
 
         private void buttonEntryCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (textBoxEntry.Text.Length != 0 || textBoxTitle.Text.Length != 0)
+            if (textBoxEntry.Text != origText || textBoxTitle.Text != origTitle)
             {
                 MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Unsaved changes. Are you sure you want to close this window?", "Unsaved Work", System.Windows.MessageBoxButton.YesNo);
                 if (messageBoxResult == MessageBoxResult.Yes)
@@ -73,6 +81,8 @@ namespace CaptainsLog
             {
                 this.Close();
             }
+           // var mainWindow = Owner as MainWindow;
+           // mainWindow.Activate();
         }
     }
 }

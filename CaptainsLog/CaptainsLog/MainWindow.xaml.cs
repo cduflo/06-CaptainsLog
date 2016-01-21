@@ -79,10 +79,27 @@ namespace CaptainsLog
             editWindow.Show();
         }
 
-        //Public Methods so that Window1 can access/manipulate data on MainWindow
+        //Public Methods so that Window1/2 can access/manipulate data on MainWindow
         public void AddLog(LogEntry log)
         {
             logEntries.Add(log);
+        }
+
+        public void UpdateLog(LogEntry log)
+        {
+            int identifier = log.Id;
+            LogEntry obj = logEntries.FirstOrDefault(x => x.Id == identifier);
+            obj.Title = log.Title;
+            obj.Text = log.Text;
+            obj.UpdateDate = log.UpdateDate;
+            RefreshGrid();
+        }
+
+        public void RefreshGrid()
+        {
+            gridLogEntries.CommitEdit();
+            gridLogEntries.CommitEdit();
+            gridLogEntries.Items.Refresh();
         }
 
         //Window Closing event handler that saves logEntries data to local file, which will load on next startup
