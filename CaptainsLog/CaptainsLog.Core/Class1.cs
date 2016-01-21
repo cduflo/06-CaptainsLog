@@ -8,11 +8,12 @@ using System.Collections.ObjectModel;
 
 namespace CaptainsLog.Core
 {
-        public class LogEntry
+    public class LogEntry
     {
         public int Id { get; set; }
         public DateTime EntryDate { get; set; }
         public string Title { get; set; }
         public string Text { get; set; }
+        public DateTime UpdateDate {get;set;}
     }
 }

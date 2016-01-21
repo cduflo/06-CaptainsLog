@@ -26,21 +26,32 @@ namespace CaptainsLog
     /// </summary>
     public partial class MainWindow : Window
     {
+        //Define global variables
         public ObservableCollection<LogEntry> logEntries;
-        string filename = "C:\\dev\\origin\\06-CaptainsLog\\CaptainsLog\\data\\Logs.txt";
+        string filename = "C:\\dev\\origin\\06-CaptainsLog\\CaptainsLog\\TextFile1.txt";
+        int tempid;
+        string tempTitle="sorry";
+        string tempText;
 
         public MainWindow()
         {
-            //Read Logs File
-
-            //Deserialize JSON
-           // imported = DeSerJSON();
-            //Load JSON to logEntries
             InitializeComponent();
-            logEntries = new ObservableCollection<LogEntry>(DeSerJSON());
+            string cont = readFile(filename);
+            //Load logEntries with log data held in filename, generate blank OC otherwise
+            if (readFile(filename).Length<10)
+            {
+                logEntries = new ObservableCollection<LogEntry>();
+            }
+            else
+            {
+                logEntries = new ObservableCollection<LogEntry>(DeSerJSON(filename));
+            }
+
+            //Have GridData display logEntries data
             gridLogEntries.ItemsSource = logEntries;
         }
 
+        //Add Button launches new window with ownership assigned*
         private void buttonAddEntry_Click(object sender, RoutedEventArgs e)
         {
             Window1 entryWindow = new Window1();
@@ -48,6 +59,7 @@ namespace CaptainsLog
             entryWindow.Show();
         }
 
+        //Remove Button removes last Entry from logEntries
         private void buttonRemoveEntry_Click(object sender, RoutedEventArgs e)
         {
             if (logEntries.Count() > 0)
@@ -56,54 +68,69 @@ namespace CaptainsLog
             }
         }
 
+        //Grid DoubleClick jumps to new window for editing
+        public void myDataGrid_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (gridLogEntries.SelectedItem == null)
+            { return; }
+            var selectedLog = gridLogEntries.SelectedItem as LogEntry;
+            tempid = selectedLog.Id;
+            tempTitle = selectedLog.Title;
+            tempText = selectedLog.Text;
+
+
+
+            Window2 editWindow = new Window2();
+            editWindow.Owner = this;
+            Window2.setTemp(selectedLog.Title);
+            editWindow.Show();
+        }
+
+        //Public Methods so that Window1 can access/manipulate data on MainWindow
         public void AddLog(LogEntry log)
         {
             logEntries.Add(log);
         }
-
+        /*
         public int entryCount()
         {
             return logEntries.Count();
         }
+        */
+        public string getTempTitle()
+        {
+            return "Title";
+        }
 
+        public string getTempText()
+        {
+            return "Text";
+        }
+        //Window Closing event handler that saves logEntries data to local file, which will load on next startup
         public void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            //Call Serialize JSON
-                     // string jsonString = SerializeJSon<ObservableCollection<LogEntry>>(logEntries);
-            writeFile(SerJSON());
-            MessageBox.Show(SerJSON());
+            writeFile(SerJSON(logEntries), filename);
         }
-        /*
-        public static string SerializeJSon<T>(T t)
-        {
-            MemoryStream stream = new MemoryStream();
-            DataContractJsonSerializer ds = new DataContractJsonSerializer(typeof(T));
-            DataContractJsonSerializerSettings s = new DataContractJsonSerializerSettings();
-            ds.WriteObject(stream, t);
-            string jsonString = Encoding.UTF8.GetString(stream.ToArray());
-            stream.Close();
-            return jsonString;
-        }*/
 
-        public string SerJSON()
+        //JSON Serialize/Deserialize Methods
+        public string SerJSON(object data)
         {
-            string serialized = JsonConvert.SerializeObject(logEntries);
+            string serialized = JsonConvert.SerializeObject(data);
             return serialized;
         }
 
-         public ObservableCollection<LogEntry> DeSerJSON()
-        //public void DeSerJSON()
+        public ObservableCollection<LogEntry> DeSerJSON(string fn)
         {
-            string text = readFile(filename);
-ObservableCollection<LogEntry>  imported = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(text);
-          return imported;
+            string text = readFile(fn);
+            ObservableCollection<LogEntry> imported = JsonConvert.DeserializeObject<ObservableCollection<LogEntry>>(text);
+            return imported;
         }
 
-
-        public void writeFile(string logs)
+        //File Read/Write Methods
+        public void writeFile(string logs, string fn)
         {
             StreamWriter objWriter;
-            objWriter = new System.IO.StreamWriter(filename);
+            objWriter = new System.IO.StreamWriter(fn);
             objWriter.Write(logs);
             objWriter.Close();
         }

@@ -6,11 +6,25 @@
         xmlns:local="clr-namespace:CaptainsLog"
         mc:Ignorable="d"
         Closing="Window_Closing"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="360" Width="728.333">
     <Grid>
-        <DataGrid x:Name="gridLogEntries" HorizontalAlignment="Left" Margin="10,56,0,0" VerticalAlignment="Top" Width="497" Height="253"/>
-        <Button x:Name="buttonAddEntry" Content="Add Entry" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="96" Height="41" Click="buttonAddEntry_Click"/>
-        <Button x:Name="buttonRemoveEntry" Content="Remove Entry" HorizontalAlignment="Left" Margin="111,10,0,0" VerticalAlignment="Top" Width="96" Height="41" Click="buttonRemoveEntry_Click"/>
+        <DataGrid x:Name="gridLogEntries" MouseDoubleClick="myDataGrid_MouseDoubleClick" HorizontalAlignment="Left" Margin="10,11,0,0" VerticalAlignment="Top" Width="497" Height="253">
+        </DataGrid>
+        <Button x:Name="buttonAddEntry" Content="Add Entry" HorizontalAlignment="Left" Margin="411,269,0,0" VerticalAlignment="Top" Width="96" Height="41" Click="buttonAddEntry_Click"/>
+        <Button x:Name="buttonRemoveEntry" Content="Remove Entry" HorizontalAlignment="Left" Margin="10,269,0,0" VerticalAlignment="Top" Width="96" Height="41" Click="buttonRemoveEntry_Click"/>
+        <Image x:Name="image" HorizontalAlignment="Left" Height="249" Margin="514,13,0,0" VerticalAlignment="Top" Width="189" RenderTransformOrigin="0.5,0.5" Source="il_570xN.279499826.jpg">
+            <Image.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.067"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Image.RenderTransform>
+            <Image.OpacityMask>
+                <ImageBrush ImageSource="il_570xN.279499826.jpg" Stretch="Uniform"/>
+            </Image.OpacityMask>
+        </Image>
 
     </Grid>
 </Window>
